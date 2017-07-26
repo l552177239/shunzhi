@@ -1,32 +1,32 @@
 import React, { Component } from 'react'
-import store from './store'
-import { Provider } from 'react-redux'
+import './App.css'
 import {
-  BrowserRouter,
+  BrowserRouter as Router,
   Route,
   Switch
 } from 'react-router-dom'
 
+import Home from './ui/pages/Home/Home'
+import Signup from './ui/pages/Signup/Signup'
+import Sidebar from './ui/shared/Sidebar/Sidebar'
 
-import './App.css'
-import HomePage from './HomePage'
-import Login from './Login'
-import SignUp from './SignUp'
-
-class App extends Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <Provider store={store}>
-          <div className="App">
-            <Switch>
-              <Route exact path='/' component={HomePage} />  
-              <Route path='/sign' component={SignUp} />
-              <Route path='/login' component={Login} />
-            </Switch>
-          </div>
-      </Provider>
-      </BrowserRouter>
+class App extends Component{
+  render(){
+    return(
+      <div className="App">
+        <Router>
+          <div>
+            <Route render={({ location }) => {
+                  return location.pathname !== '/' ?
+                  (<Sidebar />) : null
+                }} />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/signup' component={Signup} />
+          </Switch>
+        </div>
+        </Router>
+      </div>
     )
   }
 }
