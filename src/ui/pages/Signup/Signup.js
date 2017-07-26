@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
-import TitleHeader from '../../shared/TitleHeader/TitleHeader'
-import './signup.css'
+import React from 'react'
 import axios from 'axios'
-import {
-  Link
-} from 'react-router-dom'
-import Settings from '../../../settings'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-class Signup extends Component {
+import './signup.css'
+
+import TitleHeader from '../../shared/TitleHeader/TitleHeader'
+import Settings from '../../../settings'
+import store from '../../../redux/store'
+
+class Signup extends React.Component {
 
   signup = (e) => {
     e.preventDefault()
@@ -16,10 +18,18 @@ class Signup extends Component {
       password: this.password.value
     }
     axios.post(`${Settings.host}/user/signup`, data)
-    .then( res => { console.log(res.data) })
+    .then( res => {
+      alert(res.data.msg)
+      if(res.data.username){
+        store.dispatch({type:'AUTH_USER', username:res.data.username})
+        localStorage.setItem('username',res.data.username)
+      }
+    })
+    .catch( err => alert(err.response.data.msg) )
   }
 
-  render() {
+  render(){
+    console.log(this.props.account)
     return(
       <div className="signup">
         <TitleHeader title="signup" />
@@ -54,4 +64,8 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+const mapStateToprops = (state) =>({
+  account:state.account
+})
+
+export default connect(mapStateToprops)(Signup)
