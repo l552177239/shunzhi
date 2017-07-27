@@ -23,9 +23,11 @@ class Signup extends React.Component {
       if(res.data.username){
         store.dispatch({type:'AUTH_USER', username:res.data.username})
         localStorage.setItem('username',res.data.username)
+        this.props.history.push('/')
+        this.signForm.reset()
       }
     })
-    .catch( err => alert(err.response.data.msg) )
+    .catch(err => alert(err.response.data.msg))
   }
 
   render(){
@@ -42,7 +44,7 @@ class Signup extends React.Component {
               连接小而确定的幸福
             </p>
           </div>
-          <form onSubmit={this.signup} className="signup-form">
+          <form ref={value => this.signForm = value} onSubmit={this.signup} className="signup-form">
             <div className="signup-text-inputs">
               <div className="signup-text-inputs-inner">
                 <input type="text" ref={value => this.username = value} placeholder="用户名" />

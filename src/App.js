@@ -11,6 +11,7 @@ import {
 import store from './redux/store'
 import Home from './ui/pages/Home/Home'
 import Signup from './ui/pages/Signup/Signup'
+import Login from './ui/pages/Login/Login'
 import Sidebar from './ui/shared/Sidebar/Sidebar'
 
 class App extends Component{
@@ -26,6 +27,7 @@ class App extends Component{
                   }} />
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
             </Switch>
           </div>
